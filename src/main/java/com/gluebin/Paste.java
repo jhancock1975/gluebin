@@ -1,0 +1,60 @@
+package com.gluebin;
+import java.lang.Object;
+import java.sql.Timestamp;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+
+@Entity @Table(name = "pastes")
+public class Paste{
+
+	@Id
+    private String shortLink;
+
+	@Column(nullable = false)
+	private long expirationLengthInMinutes;
+
+	@Column(nullable = false)
+	private Timestamp createdAt;
+	
+	@Column(length = 255, nullable = false)
+    @NotBlank(message = "Paste path must not be empty")
+	private String pastePath;
+
+	public String getShortLink() {
+		return shortLink;
+	}
+
+	public void setShortLink(String shortLink) {
+		this.shortLink = shortLink;
+	}
+
+	public long getExpirationLengthInMinutes() {
+		return expirationLengthInMinutes;
+	}
+
+	public void setExpirationLengthInMinutes(long expirationLengthInMinutes) {
+		this.expirationLengthInMinutes = expirationLengthInMinutes;
+	}
+
+	public Timestamp getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public String getPastePath() {
+		return pastePath;
+	}
+
+	public void setPastePath(String pastePath) {
+		this.pastePath = pastePath;
+	}
+
+}
