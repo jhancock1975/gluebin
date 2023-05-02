@@ -19,3 +19,21 @@ services:
     ports:
       - 3306:3306
      # - 19999:8080
+    networks:
+        - spring-cloud-network
+    container_name: mysql
+
+  gluebin-service:
+    build:
+      context: /home/jthancoc/build/docker-experiments/gluebin/docker/
+      dockerfile: gluebin-service-dockerfile
+    image: gluebin-server:latest
+    ports:
+          - 18888:8080
+    networks:
+          - spring-cloud-network
+    depends_on:
+        - db
+networks:
+    spring-cloud-network:
+        driver: bridge
