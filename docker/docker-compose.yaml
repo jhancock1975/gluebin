@@ -34,6 +34,15 @@ services:
           - spring-cloud-network
     depends_on:
         - db
+  web:
+    image: nginx:latest
+    volumes:
+    - ./web:/usr/share/nginx/html
+    ports:
+      - 19999:80
+    networks:
+      - spring-cloud-network
+
 networks:
     spring-cloud-network:
         driver: bridge
