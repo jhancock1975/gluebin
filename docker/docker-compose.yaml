@@ -34,14 +34,16 @@ services:
           - spring-cloud-network
     depends_on:
         - db
+    container_name:
+        gluebin-service
   web:
-    image: nginx:latest
-    volumes:
-    - ./web:/usr/share/nginx/html
-    ports:
-      - 19999:80
-    networks:
-      - spring-cloud-network
+   image: reverse-proxy:latest
+   volumes:
+   - ./web:/usr/share/nginx/html
+   ports:
+     - 19999:80
+   networks:
+     - spring-cloud-network
 
 networks:
     spring-cloud-network:
