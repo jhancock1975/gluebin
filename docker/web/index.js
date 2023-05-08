@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM content has been loaded and parsed');
+});
     myBody = {
         shortUrlLink: "abc",
         expirationLengthInMinutes: 10,
@@ -7,7 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
         pastePath: "/paste/path"
      }
 
-    const userAction = async () => {
+    const userAction = async (textEltId) => {
+      pasteText = document.getElementById(textEltId).value;
+      console.log('paste text: ', pasteText )
       const response = await fetch('http://localhost:19999/pastes', {
           method: 'POST',
           body: JSON.stringify(myBody),
@@ -27,5 +30,4 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error); // Log any errors
         });
     }
-  userAction();
-});
+/* comment */

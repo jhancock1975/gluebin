@@ -1,12 +1,22 @@
 <html>
   <head>
+ <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script language='javascript' src='index.js'>
     </script>
     <title>
-      hello
+      Gluebin
       </title>
     </head>
   <body>
-    <h1>Hello</h1>
+    <div id='banner'>
+    <h1>Gluebin</h1>
+    </div>
+    <div id='pasteBoxDiv'>
+      <textarea name="pasteTextArea" id="pasteTextArea"
+                 rows="" cols="" tabindex=""></textarea>
+      </div>
+    <div id='submitButtonDiv'>
+      <button onclick='userAction("pasteTextArea")'>Click to Save</button>
+      </div>
     </body>
   </html>
