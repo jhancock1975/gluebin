@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity @Table(name = "pastes")
@@ -24,6 +25,17 @@ public class Paste{
 	@Column(length = 255, nullable = false)
     @NotBlank(message = "Paste path must not be empty")
 	private String pastePath;
+
+	@Transient
+	private String pasteText;
+
+	public void setPasteText(String pasteText) {
+		this.pasteText = pasteText;
+	}
+
+	public String getPasteText() {
+		return pasteText;
+	}
 
 	public String getShortLink() {
 		return shortLink;

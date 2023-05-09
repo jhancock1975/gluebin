@@ -6,11 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
         expirationLengthInMinutes: 10,
         createdAt: "2023-04-30T00:00:00",
         pastePath: "/paste/path"
-     }
+    };
 
     const userAction = async (textEltId) => {
       pasteText = document.getElementById(textEltId).value;
-      console.log('paste text: ', pasteText )
+      myBody['pasteText'] = pasteText;
+      console.log('myBody', myBody)
       const response = await fetch('http://localhost:19999/pastes', {
           method: 'POST',
           body: JSON.stringify(myBody),

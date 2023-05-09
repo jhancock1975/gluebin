@@ -8,6 +8,8 @@ import java.sql.Timestamp;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/pastes")
 public class PastesApiController {
+    private static final Logger logger = LoggerFactory.getLogger(PastesApiController.class);
     private PasteService service;
 
     protected PastesApiController(PasteService service, ModelMapper mapper) {
@@ -35,6 +38,7 @@ public class PastesApiController {
         String ip = request.getRemoteAddr();
         Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
         paste.setCreatedAt(timeStamp);
+        logger.debug("pasteText {}", paste.getPasteText());
         String shortUrl = getShortUrl(ip + timeStamp.toString()).get();
         paste.setShortLink(shortUrl);
         service.add(paste);
