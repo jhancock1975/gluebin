@@ -13,10 +13,17 @@
     </div>
     <div id='pasteBoxDiv'>
       <textarea name="pasteTextArea" id="pasteTextArea"
-                 rows="" cols="" tabindex=""></textarea>
+                 rows="" cols="" tabindex="1"></textarea>
       </div>
     <div id='submitButtonDiv'>
-      <button onclick='userAction("pasteTextArea")'>Click to Save</button>
+      <button onclick='postPaste("pasteTextArea")'>Click to Save</button>
       </div>
+    <div id='getPasteDiv'>
+      <input type="text" name="pasteIdText" id="pasteIdText" tabindex="2"></textarea>
+      </div>
+    <div id='getPasteButtonDiv'>
+      <button onclick='getPaste("pasteIdText")'>Click to Save</button>
+      </div>
+
     </body>
   </html>

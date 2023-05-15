@@ -1,14 +1,11 @@
 package com.gluebin;
-import java.lang.Object;
 import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity @Table(name = "pastes")
 public class Paste{
@@ -19,11 +16,11 @@ public class Paste{
 	@Column(nullable = false)
 	private long expirationLengthInMinutes;
 
-	@Column(nullable = false)
+	//@Column(nullable = false)
 	private Timestamp createdAt;
 	
-	@Column(length = 255, nullable = false)
-    @NotBlank(message = "Paste path must not be empty")
+	@Column(length = 255)
+    //@NotBlank(message = "Paste path must not be empty")
 	private String pastePath;
 
 	@Transient

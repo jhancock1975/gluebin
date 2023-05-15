@@ -43,13 +43,19 @@ public class PastesApiController {
     }
 
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody @Valid Paste paste, HttpServletRequest request) {
+    public ResponseEntity<?> add(@RequestBody Paste paste, HttpServletRequest request) {
+        // removed @Valid from infront of paste to disable validation
         // logic for creating short link from
         // https://github.com/donnemartin/system-design-primer/tree/master/solutions/system_design/pastebin
         String ip = request.getRemoteAddr();
         Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
         paste.setCreatedAt(timeStamp);
         logger.debug("pasteText {}", paste.getPasteText());
+        String shortUrl = getShortUrl(ip + timeStamp.toString()).get();
+        paste.setShortLink(shortUrl);
+        paste.setPastePath(shortUrl);
+        paste.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        paste.setExpirationLengthInMinutes(10);
         try {
             minioService.uploadFile(paste.getPasteText(), paste.getPastePath());
         } catch (InvalidKeyException | ServerException | ErrorResponseException | NoSuchAlgorithmException
@@ -57,8 +63,6 @@ public class PastesApiController {
                 | IOException e) {
            logger.debug("{}", e);
         }
-        String shortUrl = getShortUrl(ip + timeStamp.toString()).get();
-        paste.setShortLink(shortUrl);
         service.add(paste);
         URI uri = URI.create("/pastes/" + paste.getShortLink());
         return ResponseEntity.created(uri).body(paste);
@@ -68,10 +72,12 @@ public class PastesApiController {
     public ResponseEntity<?> get(@PathVariable("id") String id) {
         try {
             Paste paste = service.get(id);
+            paste.setPasteText(minioService.getFile(paste.getPastePath()));
             return ResponseEntity.ok(paste);
-
-        } catch (PasteNotFoundException e) {
-            e.printStackTrace();
+        } catch (InvalidKeyException | ErrorResponseException | InsufficientDataException | InternalException
+                | InvalidResponseException | NoSuchAlgorithmException | ServerException | XmlParserException
+                | IllegalArgumentException | IOException | PasteNotFoundException e) {
+            logger.debug("{}", e);
             return ResponseEntity.notFound().build();
         }
     }

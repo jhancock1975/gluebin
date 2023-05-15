@@ -13,15 +13,22 @@ services:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: usersdb1
 
-  #adminer:
-    #image: adminer
-    #restart: always
     ports:
       - 3306:3306
-     # - 19999:8080
     networks:
         - spring-cloud-network
     container_name: mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - spring-cloud-network
+    container_name: phpmyadmin
 
   gluebin-service:
     build:
