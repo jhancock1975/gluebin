@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: GlueBin
+  description: swagger document for Pastebin-like service
+  version: "0.1"
+paths:
+  /pastes/{shortUrl}:
+    get:
+      summary: returns the contents of a paste
+      parameters:
+        - in: path
+          name: shortUrl
+          schema:
+            type: string
+          required: true
+          description: the unique identifier for a saved paste
+      responses:
+      '200':
+        description: ok
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pasteResponse'
+  /pastes:
+    post:
+        summary: save a paste
+        requestBody:
+            description: text to save in gluebin
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            pasteText: string
+        responses:
+        '200':
+        description: ok
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pasteResponse'
+
+components:
+    schemas:
+      pasteResponse:
+        description: paste object, returned by both post and get
+        type: object
+        properties:
+          createdAt:
+            type: string
+            description: time the paste was saved to the database
+          expirationLengthInMinutes:
+            type: integer
+            description: number of minutes before paste is automatically deleted
+          pastePath:
+            type: string
+            description: path to object in object store
+          shortLink:
+            type: string
+            description: object id in object store and unqiue id of object data in the table of paste data

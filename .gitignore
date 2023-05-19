@@ -32,3 +32,5 @@ build/
 .vscode/
 
 *.jar
+
+docker/minio_storage/*
